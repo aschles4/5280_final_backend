@@ -2,26 +2,25 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"net/http"
 	"os"
+	"strings"
 
 	dbUsers "github.com/aschles4/finalProject/internal/pkg/dynamo/users"
 	"github.com/aschles4/finalProject/internal/services/users"
+	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/kelseyhightower/envconfig"
 	"github.com/rs/zerolog"
 )
 
-type FindUserProfileRequest struct {
-	Token string `json:"token"`
-}
-
 type FindUserProfileResponse struct {
 	Email          string                   `json:"email,omitempty"`
 	Name           string                   `json:"name,omitempty"`
 	StreamAccounts []dbUsers.StreamAccounts `json:"streamAccounts,omitempty"`
-	Status         int                      `json:"token,omitempty"`
-	Message        string                   `json:"errorMessage,omitempty"`
+	Status         int                      `json:"status,omitempty"`
+	Message        string                   `json:"message,omitempty"`
 }
 
 type Env struct {
@@ -35,39 +34,63 @@ type Handler struct {
 	l   zerolog.Logger
 }
 
-func (h Handler) HandleRequest(ctx context.Context, req FindUserProfileRequest) FindUserProfileResponse {
-	if req.Token == "" {
-		h.l.Info().Msg("Token is required")
-		return FindUserProfileResponse{
-			Status:  http.StatusBadRequest,
-			Message: "Token is required",
-		}
+func (h Handler) HandleRequest(ctx context.Context, event events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	var token string
+	if val, ok := event.Headers["Authorization"]; ok {
+		token = strings.Split(val, " ")[1]
 	}
 
-	act, err := h.U.FindUserAccountByToken(ctx, req.Token)
+	if token == "" {
+		h.l.Info().Msg("Token is required")
+		return h.handleError(http.StatusBadRequest, nil, "Authorization Header is required")
+	}
+
+	act, err := h.U.FindUserAccountByToken(ctx, token)
 	if err != nil {
-		h.l.Error().Msg("Failed to access user account by token")
-		return FindUserProfileResponse{
-			Status:  http.StatusUnauthorized,
-			Message: "Failed to access user account by token",
-		}
+		return h.handleError(http.StatusUnauthorized, err, "Failed to authorize request")
 	}
 
 	prof, err := h.U.FindUserProfileByID(ctx, act.ID)
 	if err != nil {
-		h.l.Error().Msg("Failed to access user profile by ID")
-		return FindUserProfileResponse{
-			Status:  http.StatusBadRequest,
-			Message: "Failed to access user profile",
-		}
+		return h.handleError(http.StatusInternalServerError, err, "Failed to access user profile")
 	}
 
 	//return
-	return FindUserProfileResponse{
+	js, err := json.Marshal(FindUserProfileResponse{
 		Email:          act.Email,
 		Name:           prof.Name,
 		StreamAccounts: prof.StreamAccounts,
+	})
+	if err != nil {
+		return h.handleError(http.StatusInternalServerError, err, "Failed to marshal response")
 	}
+
+	return events.APIGatewayProxyResponse{
+		StatusCode: http.StatusOK,
+		Body:       string(js),
+	}, nil
+}
+
+func (h Handler) handleError(status int, err error, message string) (events.APIGatewayProxyResponse, error) {
+	h.l.Error().Msg(message)
+	if err != nil {
+		h.l.Error().Msg(err.Error())
+	}
+
+	js, err := json.Marshal(FindUserProfileResponse{
+		Message: message,
+	})
+	if err != nil {
+		return events.APIGatewayProxyResponse{
+			StatusCode: http.StatusInternalServerError,
+			Body:       "{\"message\":\"InternalServerError\"}",
+		}, nil
+	}
+
+	return events.APIGatewayProxyResponse{
+		StatusCode: status,
+		Body:       string(js),
+	}, nil
 }
 
 func main() {

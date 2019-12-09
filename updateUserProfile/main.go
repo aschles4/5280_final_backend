@@ -2,26 +2,28 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"net/http"
 	"os"
+	"strings"
 
 	dbUsers "github.com/aschles4/finalProject/internal/pkg/dynamo/users"
 	"github.com/aschles4/finalProject/internal/services/users"
+	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/kelseyhightower/envconfig"
 	"github.com/rs/zerolog"
 )
 
 type UpdateUserProfileRequest struct {
-	Token          string                   `json:"token"`
 	Password       string                   `json:"password"`
 	Name           string                   `json:"name"`
 	StreamAccounts []dbUsers.StreamAccounts `json:"streamAccounts"`
 }
 
 type UpdateUserProfileResponse struct {
-	Status  int    `json:"token,omitempty"`
-	Message string `json:"errorMessage,omitempty"`
+	Status  int    `json:"status,omitempty"`
+	Message string `json:"message,omitempty"`
 }
 
 type Env struct {
@@ -35,52 +37,47 @@ type Handler struct {
 	l   zerolog.Logger
 }
 
-func (h Handler) HandleRequest(ctx context.Context, req UpdateUserProfileRequest) UpdateUserProfileResponse {
-	if req.Token == "" {
-		h.l.Info().Msg("Token is required")
-		return UpdateUserProfileResponse{
-			Status:  http.StatusBadRequest,
-			Message: "Token is required",
-		}
+func (h Handler) HandleRequest(ctx context.Context, event events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	var token string
+	if val, ok := event.Headers["Authorization"]; ok {
+		token = strings.Split(val, " ")[1]
 	}
 
-	act, err := h.U.FindUserAccountByToken(ctx, req.Token)
+	if token == "" {
+		return h.handleError(http.StatusBadRequest, nil, "Authorization Header is required")
+	}
+
+	js, err := json.Marshal(event.Body)
 	if err != nil {
-		h.l.Error().Msg("Failed to access user account by token")
-		return UpdateUserProfileResponse{
-			Status:  http.StatusBadRequest,
-			Message: "Failed to access user account by token",
-		}
+		return h.handleError(http.StatusInternalServerError, err, "Failed to marshal request")
+	}
+	println(string(js))
+
+	var req UpdateUserProfileRequest
+	err = json.Unmarshal([]byte(event.Body), &req)
+	if err != nil {
+		return h.handleError(http.StatusBadRequest, err, "Failed to marshal event")
+	}
+
+	act, err := h.U.FindUserAccountByToken(ctx, token)
+	if err != nil {
+		return h.handleError(http.StatusUnauthorized, err, "Failed to authorize request")
 	}
 
 	prof, err := h.U.FindUserProfileByID(ctx, act.ID)
 	if err != nil {
-		h.l.Error().Msg("Failed to access user profile by ID")
-		return UpdateUserProfileResponse{
-			Status:  http.StatusBadRequest,
-			Message: "Failed to access user profile",
-		}
+		return h.handleError(http.StatusInternalServerError, err, "Failed to access user profile")
 	}
 
 	//Delete User Profile
 	err = h.U.RemoveUserProfileByID(ctx, act.ID)
 	if err != nil {
-		h.l.Error().Msg("Failed to Remove User Profile")
-		h.l.Error().Msg(err.Error())
-		return UpdateUserProfileResponse{
-			Status:  http.StatusInternalServerError,
-			Message: "Failed to Remove Old User Profile",
-		}
+		return h.handleError(http.StatusInternalServerError, err, "Failed to Remove Old User Profile")
 	}
 	//Delete users account
 	err = h.U.RemoveUserAccountByID(ctx, act.ID)
 	if err != nil {
-		h.l.Error().Msg("Failed to Remove User Account")
-		h.l.Error().Msg(err.Error())
-		return UpdateUserProfileResponse{
-			Status:  http.StatusInternalServerError,
-			Message: "Failed to Create User Account",
-		}
+		return h.handleError(http.StatusInternalServerError, err, "Failed to Remove User Account")
 	}
 
 	//Update values if they are updated
@@ -97,29 +94,41 @@ func (h Handler) HandleRequest(ctx context.Context, req UpdateUserProfileRequest
 	//create users profile
 	err = h.U.CreateUserProfile(ctx, act.ID, name, act.Email, req.StreamAccounts)
 	if err != nil {
-		h.l.Error().Msg("Failed to Create User Profile")
-		h.l.Error().Msg(err.Error())
-		return UpdateUserProfileResponse{
-			Status:  http.StatusInternalServerError,
-			Message: "Failed to Create User Profile",
-		}
+		return h.handleError(http.StatusInternalServerError, err, "Failed to Create User Account")
 	}
 
 	//create users account
-	err = h.U.CreateUserAccountWithToken(ctx, act.ID, act.Email, pass, req.Token)
+	err = h.U.CreateUserAccountWithToken(ctx, act.ID, act.Email, pass, token)
 	if err != nil {
-		h.l.Error().Msg("Failed to Create User Account")
-		h.l.Error().Msg(err.Error())
-		return UpdateUserProfileResponse{
-			Status:  http.StatusInternalServerError,
-			Message: "Failed to Create User Account",
-		}
+		return h.handleError(http.StatusInternalServerError, err, "Failed to Create User Account")
 	}
 
 	//return
-	return UpdateUserProfileResponse{
-		Status: http.StatusNoContent,
+	return events.APIGatewayProxyResponse{
+		StatusCode: http.StatusNoContent,
+	}, nil
+}
+
+func (h Handler) handleError(status int, err error, message string) (events.APIGatewayProxyResponse, error) {
+	h.l.Error().Msg(message)
+	if err != nil {
+		h.l.Error().Msg(err.Error())
 	}
+
+	js, err := json.Marshal(UpdateUserProfileResponse{
+		Message: message,
+	})
+	if err != nil {
+		return events.APIGatewayProxyResponse{
+			StatusCode: http.StatusInternalServerError,
+			Body:       "{\"message\":\"InternalServerError\"}",
+		}, nil
+	}
+
+	return events.APIGatewayProxyResponse{
+		StatusCode: status,
+		Body:       string(js),
+	}, nil
 }
 
 func main() {

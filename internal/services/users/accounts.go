@@ -18,6 +18,7 @@ func (u Users) CreateUserAccount(ctx context.Context, ID, email, pass string) er
 		ID:       ID,
 		Email:    email,
 		Password: p,
+		Token:    "v",
 	}
 	return u.s.CreateUserAccount(ctx, a)
 }
@@ -46,25 +47,27 @@ func (u Users) FindUserAccountByToken(ctx context.Context, token string) (*users
 	return u.s.FindUserAccountByToken(ctx, token)
 }
 
-func (u Users) LoginUser(ctx context.Context, email, pass string) (*string, error) {
+func (u Users) LoginUser(ctx context.Context, email, pass string) (string, error) {
 	//find account
+	println("before find account")
 	act, err := u.FindUserAccountByEmail(ctx, email)
 	if err != nil {
-		return nil, err
+		return "", err
 	}
 
 	token := u.generateToken(ctx)
 	//update account
 	_, err = u.s.UpdateUserAccountToken(ctx, act.ID, token)
 	if err != nil {
-		return nil, err
+		return "", err
 	}
+	println("after update")
 
-	return &token, nil
+	return token, nil
 }
 
 func (u Users) LogoutUserByID(ctx context.Context, ID string) error {
-	_, err := u.s.UpdateUserAccountToken(ctx, ID, "")
+	_, err := u.s.UpdateUserAccountToken(ctx, ID, "howdoisecurethis")
 	if err != nil {
 		return err
 	}

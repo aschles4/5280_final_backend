@@ -13,11 +13,58 @@ func (s Store) CreateUserAccount(ctx context.Context, account UserAccount) error
 }
 
 func (s Store) FindUserAccountByEmail(ctx context.Context, email string) (*UserAccount, error) {
-	return s.readFromAccountsByType("email", email)
+	// create the api params
+	params := &dynamodb.ScanInput{
+		TableName:        aws.String("Accounts"),
+		FilterExpression: aws.String("email = :e"),
+		ExpressionAttributeValues: map[string]*dynamodb.AttributeValue{
+			":e": {S: aws.String(email)},
+		},
+	}
+	// read the item
+	resp, err := s.db.Scan(params)
+	if err != nil {
+		return nil, err
+	}
+
+	if *resp.Count >= int64(1) {
+		var act UserAccount
+		err = dynamodbattribute.UnmarshalMap(resp.Items[0], &act)
+		if err != nil {
+			return nil, err
+		}
+		return &act, nil
+	}
+
+	return nil, nil
 }
 
 func (s Store) FindUserAccountByToken(ctx context.Context, token string) (*UserAccount, error) {
-	return s.readFromAccountsByType("token", token)
+
+	// create the api params
+	params := &dynamodb.ScanInput{
+		TableName:        aws.String("Accounts"),
+		FilterExpression: aws.String("tkn = :t"),
+		ExpressionAttributeValues: map[string]*dynamodb.AttributeValue{
+			":t": {S: aws.String(token)},
+		},
+	}
+	// read the item
+	resp, err := s.db.Scan(params)
+	if err != nil {
+		return nil, err
+	}
+
+	if *resp.Count >= int64(1) {
+		var act UserAccount
+		err = dynamodbattribute.UnmarshalMap(resp.Items[0], &act)
+		if err != nil {
+			return nil, err
+		}
+		return &act, nil
+	}
+
+	return nil, nil
 }
 
 func (s Store) RemoveUserAccountByID(ctx context.Context, ID string) error {
@@ -29,13 +76,13 @@ func (s Store) UpdateUserAccountToken(ctx context.Context, ID, token string) (*U
 	params := &dynamodb.UpdateItemInput{
 		TableName: aws.String("Accounts"),
 		Key: map[string]*dynamodb.AttributeValue{
-			"Id": {
+			"id": {
 				S: aws.String(ID),
 			},
 		},
-		UpdateExpression: aws.String("set token=:t"),
+		UpdateExpression: aws.String("set tkn = :t"),
 		ExpressionAttributeValues: map[string]*dynamodb.AttributeValue{
-			":t": {N: aws.String(token)},
+			":t": {S: aws.String(token)},
 		},
 		ReturnValues: aws.String(dynamodb.ReturnValueAllNew),
 	}
@@ -54,31 +101,4 @@ func (s Store) UpdateUserAccountToken(ctx context.Context, ID, token string) (*U
 	}
 
 	return &updatedAct, nil
-}
-
-//DynamoDB Helpers
-func (s Store) readFromAccountsByType(typ, val string) (*UserAccount, error) {
-	// create the api params
-	params := &dynamodb.GetItemInput{
-		TableName: aws.String("Accounts"),
-		Key: map[string]*dynamodb.AttributeValue{
-			typ: {
-				S: aws.String(val),
-			},
-		},
-	}
-
-	// read the item
-	resp, err := s.db.GetItem(params)
-	if err != nil {
-		return nil, err
-	}
-
-	var act UserAccount
-	err = dynamodbattribute.UnmarshalMap(resp.Item, &act)
-	if err != nil {
-		return nil, err
-	}
-
-	return &act, nil
 }

@@ -22,11 +22,11 @@ type UserAccount struct {
 	ID       string `json:"id"`
 	Email    string `json:"email"`
 	Password string `json:"password"`
-	Token    string `json:"token"`
+	Token    string `json:"tkn"`
 }
 
 type UserProfile struct {
-	ID             string           `json:"Id"`
+	ID             string           `json:"id"`
 	Name           string           `json:"name"`
 	Email          string           `json:"email"`
 	StreamAccounts []StreamAccounts `json:"StreamAccounts"`
@@ -39,7 +39,7 @@ func (s Store) deleteFromTableByID(ID, table string) error {
 	params := &dynamodb.DeleteItemInput{
 		TableName: aws.String(table),
 		Key: map[string]*dynamodb.AttributeValue{
-			"Id": {
+			"id": {
 				S: aws.String(ID),
 			},
 		},

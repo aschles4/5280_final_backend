@@ -2,10 +2,12 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"net/http"
 	"os"
 
 	"github.com/aschles4/finalProject/internal/services/users"
+	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/kelseyhightower/envconfig"
 	"github.com/rs/zerolog"
@@ -18,8 +20,8 @@ type LoginRequest struct {
 
 type LoginResponse struct {
 	Token   string `json:"token,omitempty"`
-	Status  int    `json:"token,omitempty"`
-	Message string `json:"errorMessage,omitempty"`
+	Status  int    `json:"status,omitempty"`
+	Message string `json:"message,omitempty"`
 }
 
 type Env struct {
@@ -33,38 +35,67 @@ type Handler struct {
 	l   zerolog.Logger
 }
 
-func (h Handler) HandleRequest(ctx context.Context, req LoginRequest) LoginResponse {
+func (h Handler) HandleRequest(ctx context.Context, event events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	js, err := json.Marshal(event.Body)
+	if err != nil {
+		return h.handleError(http.StatusInternalServerError, err, "Failed to marshal request")
+	}
+	println(string(js))
+
+	var req LoginRequest
+	err = json.Unmarshal([]byte(event.Body), &req)
+	if err != nil {
+		return h.handleError(http.StatusBadRequest, err, "Failed to marshal event")
+	}
+
 	if req.Email == "" {
-		h.l.Info().Msg("Email is required")
-		return LoginResponse{
-			Status:  http.StatusBadRequest,
-			Message: "Email is required",
-		}
+		return h.handleError(http.StatusBadRequest, nil, "Email is required")
 	}
 
 	if req.Password == "" {
-		h.l.Info().Msg("Password is required")
-		return LoginResponse{
-			Status:  http.StatusBadRequest,
-			Message: "Password is required",
-		}
+		return h.handleError(http.StatusBadRequest, nil, "Password is required")
 	}
 
 	//Login User Here
 	token, err := h.U.LoginUser(ctx, req.Email, req.Password)
 	if err != nil {
-		h.l.Error().Msg("Failed to Login User")
-		h.l.Error().Msg(err.Error())
-		return LoginResponse{
-			Status:  http.StatusInternalServerError,
-			Message: "Failed to Login User",
-		}
+		return h.handleError(http.StatusInternalServerError, err, "Failed to marshal response")
 	}
 
 	//return users id & login token
-	return LoginResponse{
-		Token: *token,
+	js, err = json.Marshal(LoginResponse{
+		Token: token,
+	})
+	if err != nil {
+		return h.handleError(http.StatusInternalServerError, err, "Failed to marshal response")
 	}
+
+	return events.APIGatewayProxyResponse{
+		StatusCode: http.StatusOK,
+		Body:       string(js),
+	}, nil
+}
+
+func (h Handler) handleError(status int, err error, message string) (events.APIGatewayProxyResponse, error) {
+	h.l.Error().Msg(message)
+	if err != nil {
+		h.l.Error().Msg(err.Error())
+	}
+
+	js, err := json.Marshal(LoginResponse{
+		Message: message,
+	})
+	if err != nil {
+		return events.APIGatewayProxyResponse{
+			StatusCode: http.StatusInternalServerError,
+			Body:       "{\"message\":\"InternalServerError\"}",
+		}, nil
+	}
+
+	return events.APIGatewayProxyResponse{
+		StatusCode: status,
+		Body:       string(js),
+	}, nil
 }
 
 func main() {
