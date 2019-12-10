@@ -80,7 +80,7 @@ type ShowDetailsResponse struct {
 		SeasonNumber   int         `json:"season_number"`
 		ShowID         int         `json:"show_id"`
 		StillPath      interface{} `json:"still_path"`
-		VoteAverage    int         `json:"vote_average"`
+		VoteAverage    float64     `json:"vote_average"`
 		VoteCount      int         `json:"vote_count"`
 	} `json:"last_episode_to_air"`
 	Name             string      `json:"name"`
@@ -125,7 +125,7 @@ type SeasonDetailsResponse struct {
 		SeasonNumber   int           `json:"season_number"`
 		ShowID         int           `json:"show_id"`
 		StillPath      string        `json:"still_path"`
-		VoteAverage    int           `json:"vote_average"`
+		VoteAverage    float64       `json:"vote_average"`
 		VoteCount      int           `json:"vote_count"`
 		Crew           []interface{} `json:"crew"`
 		GuestStars     []interface{} `json:"guest_stars"`
@@ -243,8 +243,8 @@ func (c Content) FindShowDetailsByID(ctx context.Context, ID string) (*ShowDetai
 	return &d, nil
 }
 
-func (c Content) FindSeasonDetailsByNumber(ctx context.Context, number int) (*SeasonDetails, error) {
-	url := fmt.Sprintf("https://api.themoviedb.org/3/tv/season/%d?language=en-US&api_key=%s", number, c.ApiKey)
+func (c Content) FindSeasonDetailsByNumber(ctx context.Context, id, number string) (*SeasonDetails, error) {
+	url := fmt.Sprintf("https://api.themoviedb.org/3/tv/%s/season/%s?language=en-US&api_key=%s", id, number, c.ApiKey)
 
 	payload := strings.NewReader("{}")
 	req, _ := http.NewRequest("GET", url, payload)
@@ -254,11 +254,17 @@ func (c Content) FindSeasonDetailsByNumber(ctx context.Context, number int) (*Se
 	body, _ := ioutil.ReadAll(res.Body)
 
 	var resp SeasonDetailsResponse
-
 	err := json.Unmarshal(body, &resp)
 	if err != nil {
 		return nil, err
 	}
+
+	js, err := json.Marshal(resp)
+	if err != nil {
+		return nil, err
+	}
+
+	println(string(js))
 
 	episodes := make([]Episode, 0)
 	for _, e := range resp.Episodes {
@@ -279,8 +285,8 @@ func (c Content) FindSeasonDetailsByNumber(ctx context.Context, number int) (*Se
 	return &d, nil
 }
 
-func (c Content) FindEpisodeDetailsByNumber(ctx context.Context, number int) (*EpisodeDetails, error) {
-	url := fmt.Sprintf("https://api.themoviedb.org/3/tv/season/episode/%d?language=en-US&api_key=%s", number, c.ApiKey)
+func (c Content) FindEpisodeDetailsByNumber(ctx context.Context, tvId, seasonNum, episodeNum string) (*EpisodeDetails, error) {
+	url := fmt.Sprintf("https://api.themoviedb.org/3/tv/%s/season/%s/episode/%s?language=en-US&api_key=%s", tvId, seasonNum, episodeNum, c.ApiKey)
 
 	payload := strings.NewReader("{}")
 	req, _ := http.NewRequest("GET", url, payload)

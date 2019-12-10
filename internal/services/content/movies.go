@@ -113,7 +113,7 @@ func (c Content) FindMovieDetailsByID(ctx context.Context, ID string) (*MovieDet
 
 	var u string
 	if val, ok := b["poster_path"]; ok {
-		url = fmt.Sprintf("https://image.tmdb.org/t/p/w185%v", val)
+		u = fmt.Sprintf("https://image.tmdb.org/t/p/w185%v", val)
 	}
 
 	d := MovieDetails{

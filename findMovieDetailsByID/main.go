@@ -2,8 +2,12 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"net/http"
 	"os"
+	"strings"
+
+	"github.com/aws/aws-lambda-go/events"
 
 	"github.com/aschles4/finalProject/internal/services/content"
 	"github.com/aschles4/finalProject/internal/services/users"
@@ -12,15 +16,10 @@ import (
 	"github.com/rs/zerolog"
 )
 
-type FindMovieDetailsByIDRequest struct {
-	Token string `json:"token"`
-	ID    string `json:"id"`
-}
-
 type FindMovieDetailsByIDResponse struct {
 	Details *content.MovieDetails `json:"details,omitempty"`
-	Status  int                   `json:"token,omitempty"`
-	Message string                `json:"errorMessage,omitempty"`
+	Status  int                   `json:"status,omitempty"`
+	Message string                `json:"message,omitempty"`
 }
 
 type Env struct {
@@ -36,46 +35,69 @@ type Handler struct {
 	l   zerolog.Logger
 }
 
-func (h Handler) HandleRequest(ctx context.Context, req FindMovieDetailsByIDRequest) FindMovieDetailsByIDResponse {
-	if req.Token == "" {
-		h.l.Info().Msg("Token is required")
-		return FindMovieDetailsByIDResponse{
-			Status:  http.StatusBadRequest,
-			Message: "Token is required",
-		}
+func (h Handler) HandleRequest(ctx context.Context, event events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	var token string
+	if val, ok := event.Headers["Authorization"]; ok {
+		token = strings.Split(val, " ")[1]
 	}
 
-	if req.ID == "" {
-		h.l.Info().Msg("Movie ID is required")
-		return FindMovieDetailsByIDResponse{
-			Status:  http.StatusBadRequest,
-			Message: "Movie ID is required",
-		}
+	if token == "" {
+		return h.handleError(http.StatusBadRequest, nil, "Authorization Header is required")
 	}
 
-	_, err := h.U.FindUserAccountByToken(ctx, req.Token)
+	_, err := h.U.FindUserAccountByToken(ctx, token)
 	if err != nil {
-		h.l.Error().Msg("Failed to access user account by token")
-		return FindMovieDetailsByIDResponse{
-			Status:  http.StatusUnauthorized,
-			Message: "Failed to access user account by token",
-		}
+		return h.handleError(http.StatusUnauthorized, err, "Failed to authorize request")
 	}
 
-	d, err := h.C.FindMovieDetailsByID(ctx, req.ID)
+	var movieId string
+	if val, ok := event.PathParameters["movieid"]; ok {
+		movieId = val
+	}
+
+	if movieId == "" {
+		return h.handleError(http.StatusBadRequest, nil, "Movie ID is required")
+	}
+
+	d, err := h.C.FindMovieDetailsByID(ctx, movieId)
 	if err != nil {
-		h.l.Error().Msg("Failed to access content details")
-		h.l.Error().Msg(err.Error())
-		return FindMovieDetailsByIDResponse{
-			Status:  http.StatusInternalServerError,
-			Message: "Failed to access content details",
-		}
+		return h.handleError(http.StatusInternalServerError, err, "Failed to access content details")
 	}
 
 	//return
-	return FindMovieDetailsByIDResponse{
+	js, err := json.Marshal(FindMovieDetailsByIDResponse{
 		Details: d,
+	})
+	if err != nil {
+		return h.handleError(http.StatusInternalServerError, err, "Failed to marshal response")
 	}
+
+	return events.APIGatewayProxyResponse{
+		StatusCode: http.StatusOK,
+		Body:       string(js),
+	}, nil
+}
+
+func (h Handler) handleError(status int, err error, message string) (events.APIGatewayProxyResponse, error) {
+	h.l.Error().Msg(message)
+	if err != nil {
+		h.l.Error().Msg(err.Error())
+	}
+
+	js, err := json.Marshal(FindMovieDetailsByIDResponse{
+		Message: message,
+	})
+	if err != nil {
+		return events.APIGatewayProxyResponse{
+			StatusCode: http.StatusInternalServerError,
+			Body:       "{\"message\":\"InternalServerError\"}",
+		}, nil
+	}
+
+	return events.APIGatewayProxyResponse{
+		StatusCode: status,
+		Body:       string(js),
+	}, nil
 }
 
 func main() {
