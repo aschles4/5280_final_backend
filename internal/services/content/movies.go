@@ -7,6 +7,8 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strings"
+
+	"github.com/aschles4/finalProject/internal/services/guidebox"
 )
 
 type WatchNow struct {
@@ -15,11 +17,11 @@ type WatchNow struct {
 }
 
 type MovieDetails struct {
-	ID          string     `json:"id"`
-	Title       string     `json:"title"`
-	Description string     `json:"description"`
-	URL         string     `json:"thumbnailURL"`
-	WatchNow    []WatchNow `json:"watchNow"`
+	ID          string            `json:"id"`
+	Title       string            `json:"title"`
+	Description string            `json:"description"`
+	URL         string            `json:"thumbnailURL"`
+	Sources     []guidebox.Source `json:"source"`
 }
 
 type MovieSearchResponse struct {
@@ -116,11 +118,24 @@ func (c Content) FindMovieDetailsByID(ctx context.Context, ID string) (*MovieDet
 		u = fmt.Sprintf("https://image.tmdb.org/t/p/w185%v", val)
 	}
 
+	//Call search here
+	guideBoxId, err := c.GuideBox.SearchByIDAndType(ctx, "movie", ID)
+	if err != nil {
+		return nil, err
+	}
+
+	//Call details
+	sources, err := c.GuideBox.FindMovieSources(ctx, guideBoxId)
+	if err != nil {
+		return nil, err
+	}
+
 	d := MovieDetails{
 		ID:          ID,
 		Title:       title,
 		Description: description,
 		URL:         u,
+		Sources:     *sources,
 	}
 
 	return &d, nil

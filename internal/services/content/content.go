@@ -7,10 +7,13 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strings"
+
+	"github.com/aschles4/finalProject/internal/services/guidebox"
 )
 
 type Content struct {
-	ApiKey string `json:"key"`
+	ApiKey   string            `json:"key"`
+	GuideBox guidebox.GuideBox `json:"GuideBox"`
 }
 
 type Thumbnail struct {
@@ -70,9 +73,15 @@ type MultiSearchResponse struct {
 	TotalPages   int `json:"total_pages"`
 }
 
-func NewContentService(key string) (*Content, error) {
+func NewContentService(tmdbKey, guideboxKey string) (*Content, error) {
+
+	g, err := guidebox.NewGuideBoxService(guideboxKey)
+	if err != nil {
+		return nil, nil
+	}
 	return &Content{
-		ApiKey: key,
+		ApiKey:   tmdbKey,
+		GuideBox: *g,
 	}, nil
 }
 

@@ -23,9 +23,10 @@ type FindMovieDetailsByIDResponse struct {
 }
 
 type Env struct {
-	Connection string `required:"true" default:"https://dynamodb.us-east-1.amazonaws.com" envconfig:"CONNECTION"`
-	Region     string `required:"true" default:"us-east-1" envconfig:"REGION"`
-	IMBDKey    string `required:"true" default:"" envconfig:"IMBD_KEY"`
+	Connection  string `required:"true" default:"https://dynamodb.us-east-1.amazonaws.com" envconfig:"CONNECTION"`
+	Region      string `required:"true" default:"us-east-1" envconfig:"REGION"`
+	IMBDKey     string `required:"true" default:"" envconfig:"IMBD_KEY"`
+	GuideBoxKey string `required:"true" default:"" envconfig:"GB_KEY"`
 }
 
 type Handler struct {
@@ -116,7 +117,7 @@ func main() {
 		l.Fatal().Msg("failed to connect to users service")
 	}
 
-	c, err := content.NewContentService(e.IMBDKey)
+	c, err := content.NewContentService(e.IMBDKey, e.GuideBoxKey)
 	if err != nil {
 		l.Info().Msg(err.Error())
 		l.Fatal().Msg("failed to connect to users service")

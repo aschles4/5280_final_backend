@@ -6,7 +6,10 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"strconv"
 	"strings"
+
+	"github.com/aschles4/finalProject/internal/services/guidebox"
 )
 
 type ShowDetails struct {
@@ -26,11 +29,11 @@ type SeasonDetails struct {
 }
 
 type EpisodeDetails struct {
-	ID          string     `json:"id"`
-	Title       string     `json:"title"`
-	Description string     `json:"description"`
-	URL         string     `json:"thumbnailURL"`
-	WatchNow    []WatchNow `json:"watchNow"`
+	ID          string            `json:"id"`
+	Title       string            `json:"title"`
+	Description string            `json:"description"`
+	URL         string            `json:"thumbnailURL"`
+	Sources     []guidebox.Source `json:"sources"`
 }
 
 type Season struct {
@@ -302,11 +305,49 @@ func (c Content) FindEpisodeDetailsByNumber(ctx context.Context, tvId, seasonNum
 		return nil, err
 	}
 
+	epNum, err := strconv.Atoi(episodeNum)
+	if err != nil {
+		return nil, err
+	}
+
+	println(epNum)
+
+	//Call search here
+	guideBoxId, err := c.GuideBox.SearchByIDAndType(ctx, "show", tvId)
+	if err != nil {
+		return nil, err
+	}
+
+	println(guideBoxId)
+
+	//Call details
+	sources, err := c.GuideBox.FindEpisodeDetails(ctx, guideBoxId, fmt.Sprintf("%d", resp.SeasonNumber))
+	if err != nil {
+		return nil, err
+	}
+
+	j, err := json.Marshal(sources)
+	if err != nil {
+		return nil, err
+	}
+
+	println(string(j))
+
+	epSrc := make([]guidebox.Source, 0)
+	//loop sources....
+	for _, episode := range sources.EpisodeSources {
+		if episode.EpisodeNumber == epNum {
+			epSrc = episode.EpisodeSources
+			break
+		}
+	}
+
 	d := EpisodeDetails{
 		ID:          fmt.Sprintf("%v", resp.ID),
 		Title:       fmt.Sprintf("%v", resp.Name),
 		Description: fmt.Sprintf("%v", resp.Overview),
 		URL:         fmt.Sprintf("https://image.tmdb.org/t/p/w185%v", resp.StillPath),
+		Sources:     epSrc,
 	}
 
 	return &d, nil

@@ -2,13 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3040f98f-7463-45b7-808d-56a1c078eff7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/search/deployment.zip" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/search/main" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/search/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AddToLibrary/deployment.zip" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AddToLibrary/main" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AddToLibrary/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/services/guidebox/guidebox.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/findAllSuggestions/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/findAllSuggestions/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/findEpisodeDetailsByNumber/deployment.zip" beforeDir="false" afterPath="$PROJECT_DIR$/findEpisodeDetailsByNumber/deployment.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/findEpisodeDetailsByNumber/main" beforeDir="false" afterPath="$PROJECT_DIR$/findEpisodeDetailsByNumber/main" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/findEpisodeDetailsByNumber/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/findEpisodeDetailsByNumber/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/findMovieDetailsByID/deployment.zip" beforeDir="false" afterPath="$PROJECT_DIR$/findMovieDetailsByID/deployment.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/findMovieDetailsByID/main" beforeDir="false" afterPath="$PROJECT_DIR$/findMovieDetailsByID/main" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/findMovieDetailsByID/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/findMovieDetailsByID/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/findMovieSuggestions/deployment.zip" beforeDir="false" afterPath="$PROJECT_DIR$/findMovieSuggestions/deployment.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/findMovieSuggestions/main" beforeDir="false" afterPath="$PROJECT_DIR$/findMovieSuggestions/main" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/findMovieSuggestions/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/findMovieSuggestions/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/findSeasonDetailsByNumber/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/findSeasonDetailsByNumber/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/findShowDetailsByID/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/findShowDetailsByID/main.go" afterDir="false" />
@@ -16,6 +23,7 @@
       <change beforePath="$PROJECT_DIR$/internal/services/content/content.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/services/content/content.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/services/content/movies.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/services/content/movies.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/services/content/shows.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/services/content/shows.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/services/payment/payment.go" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,68 +32,121 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/findUserProfile/main.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="735">
-              <caret line="49" column="89" selection-start-line="49" selection-start-column="8" selection-end-line="49" selection-end-column="89" />
-              <folding>
-                <element signature="e#14#355#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/findAllSuggestions/main.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="615">
-              <caret line="55" column="5" selection-start-line="55" selection-start-column="5" selection-end-line="55" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/search/main.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="129">
-              <caret line="34" column="22" selection-start-line="34" selection-start-column="22" selection-end-line="34" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/internal/services/content/content.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="17" column="39" selection-start-line="17" selection-start-column="39" selection-end-line="17" selection-end-column="39" />
-              <folding>
-                <element signature="e#17#98#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/internal/services/content/movies.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="655">
-              <caret line="83" column="28" selection-start-line="50" selection-start-column="4" selection-end-line="83" selection-end-column="28" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/findEpisodeDetailsByNumber/main.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="499">
-              <caret line="52" column="4" selection-start-line="52" selection-start-column="4" selection-end-line="59" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.3587375">
+      <split-first>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/findShowSuggestions/main.go">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="210">
+                  <caret line="28" column="70" selection-start-line="28" selection-start-column="70" selection-end-line="28" selection-end-column="70" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/internal/services/content/content.go">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="1110">
+                  <caret line="83" column="21" selection-start-line="83" selection-start-column="21" selection-end-line="83" selection-end-column="21" />
+                  <folding>
+                    <element signature="e#17#162#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/findEpisodeDetailsByNumber/main.go">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="990">
+                  <caret line="80" column="33" selection-start-line="80" selection-start-column="33" selection-end-line="80" selection-end-column="33" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/findMovieDetailsByID/main.go">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="210">
+                  <caret line="28" column="68" selection-start-line="28" selection-start-column="62" selection-end-line="28" selection-end-column="68" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/findSeasonDetailsByNumber/main.go">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="210">
+                  <caret line="28" column="70" selection-start-line="28" selection-start-column="70" selection-end-line="28" selection-end-column="70" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/findShowDetailsByID/main.go">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="75">
+                  <caret line="19" column="28" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/findUserProfile/main.go">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="540">
+                  <caret line="49" column="89" selection-start-line="49" selection-start-column="8" selection-end-line="49" selection-end-column="89" />
+                  <folding>
+                    <element signature="e#14#355#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/internal/services/content/shows.go">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="631">
+                  <caret line="338" column="41" selection-start-line="338" selection-start-column="41" selection-end-line="338" selection-end-column="41" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/internal/services/content/movies.go">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="1665">
+                  <caret line="120" column="4" selection-start-line="120" selection-start-column="4" selection-end-line="130" selection-end-column="5" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/internal/services/guidebox/guidebox.go">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="4065">
+                  <caret line="278" column="46" selection-start-line="278" selection-start-column="46" selection-end-line="278" selection-end-column="46" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/signup/main.go">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="60">
+                  <caret line="17" column="5" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -155,24 +216,27 @@
         <option value="$PROJECT_DIR$/signup/main.go" />
         <option value="$PROJECT_DIR$/findUserProfile/main.go" />
         <option value="$PROJECT_DIR$/logout/main.go" />
-        <option value="$PROJECT_DIR$/findMovieSuggestions/main.go" />
+        <option value="$PROJECT_DIR$/login/main.go" />
+        <option value="$PROJECT_DIR$/search/main.go" />
+        <option value="$PROJECT_DIR$/internal/services/payment/payment.go" />
+        <option value="$PROJECT_DIR$/AddToLibrary/main.go" />
+        <option value="$PROJECT_DIR$/internal/services/content/content.go" />
+        <option value="$PROJECT_DIR$/findEpisodeDetailsByNumber/main.go" />
         <option value="$PROJECT_DIR$/findAllSuggestions/main.go" />
+        <option value="$PROJECT_DIR$/findSeasonDetailsByNumber/main.go" />
+        <option value="$PROJECT_DIR$/findShowDetailsByID/main.go" />
         <option value="$PROJECT_DIR$/findShowSuggestions/main.go" />
         <option value="$PROJECT_DIR$/internal/services/content/movies.go" />
         <option value="$PROJECT_DIR$/findMovieDetailsByID/main.go" />
-        <option value="$PROJECT_DIR$/findShowDetailsByID/main.go" />
-        <option value="$PROJECT_DIR$/findSeasonDetailsByNumber/main.go" />
-        <option value="$PROJECT_DIR$/findEpisodeDetailsByNumber/main.go" />
         <option value="$PROJECT_DIR$/internal/services/content/shows.go" />
-        <option value="$PROJECT_DIR$/login/main.go" />
-        <option value="$PROJECT_DIR$/search/main.go" />
-        <option value="$PROJECT_DIR$/internal/services/content/content.go" />
+        <option value="$PROJECT_DIR$/internal/services/guidebox/guidebox.go" />
+        <option value="$PROJECT_DIR$/findMovieSuggestions/main.go" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="width" value="2560" />
-    <option name="height" value="1080" />
+    <option name="width" value="1680" />
+    <option name="height" value="1050" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -191,32 +255,12 @@
             <path>
               <item name="finalProject" type="b2602c69:ProjectViewProjectNode" />
               <item name="finalProject" type="462c0819:PsiDirectoryNode" />
-              <item name="internal" type="462c0819:PsiDirectoryNode" />
+              <item name="findMovieSuggestions" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="finalProject" type="b2602c69:ProjectViewProjectNode" />
               <item name="finalProject" type="462c0819:PsiDirectoryNode" />
-              <item name="internal" type="462c0819:PsiDirectoryNode" />
-              <item name="services" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="finalProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="finalProject" type="462c0819:PsiDirectoryNode" />
-              <item name="internal" type="462c0819:PsiDirectoryNode" />
-              <item name="services" type="462c0819:PsiDirectoryNode" />
-              <item name="content" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="finalProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="finalProject" type="462c0819:PsiDirectoryNode" />
-              <item name="internal" type="462c0819:PsiDirectoryNode" />
-              <item name="services" type="462c0819:PsiDirectoryNode" />
-              <item name="users" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="finalProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="finalProject" type="462c0819:PsiDirectoryNode" />
-              <item name="search" type="462c0819:PsiDirectoryNode" />
+              <item name="signup" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -263,14 +307,9 @@
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
     <layout>
-      <window_info id="Favorites" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16117217" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15140416" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Database Changes" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info active="true" anchor="bottom" id="Terminal" visible="true" weight="0.18265305" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32959184" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.12772277" />
@@ -278,10 +317,15 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Database" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="8" />
+      <window_info anchor="bottom" id="Version Control" order="9" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" sideWeight="0.4993895" visible="true" weight="0.27755103" />
+      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.50061053" side_tool="true" weight="0.27755103" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Database" order="3" />
     </layout>
     <layout-to-restore>
       <window_info id="Favorites" order="0" side_tool="true" />
@@ -309,16 +353,7 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/internal/pkg/lambda/starter.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="36" column="4" lean-forward="true" selection-start-line="36" selection-start-column="4" selection-end-line="36" selection-end-column="25" />
-          <folding>
-            <element signature="e#13#94#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/internal/pkg/lambda/starter.go" />
     <entry file="file://$PROJECT_DIR$/internal/pkg/dynamo/users/store.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
@@ -326,13 +361,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/internal/pkg/dynamo/dynamo.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="14" selection-start-column="14" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/internal/pkg/dynamo/dynamo.go" />
     <entry file="file://$PROJECT_DIR$/internal/services/content/store.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -350,16 +379,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/internal/services/users/profiles.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="19" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
-          <folding>
-            <element signature="e#15#99#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/internal/services/users/users.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -371,23 +390,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="12" column="14" selection-start-line="12" selection-start-column="14" selection-end-line="12" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/internal/pkg/dynamo/users/user.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-18">
-          <caret line="24" column="32" selection-start-line="24" selection-start-column="32" selection-end-line="24" selection-end-column="32" />
-          <folding>
-            <element signature="e#15#168#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/internal/services/users/accounts.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="45" column="15" selection-start-line="45" selection-start-column="15" selection-end-line="45" selection-end-column="15" />
         </state>
       </provider>
     </entry>
@@ -432,59 +434,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/findMovieSuggestions/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="591">
-          <caret line="54" column="105" selection-start-line="54" selection-start-column="8" selection-end-line="54" selection-end-column="105" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/logout/main.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="202">
           <caret line="51" column="5" selection-start-line="51" selection-start-column="5" selection-end-line="51" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/signup/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="46" column="5" selection-start-line="46" selection-start-column="5" selection-end-line="46" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/findShowSuggestions/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-624">
-          <caret line="16" column="1" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/findMovieDetailsByID/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="314">
-          <caret line="77" column="10" selection-start-line="67" selection-start-column="4" selection-end-line="77" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/internal/services/content/shows.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="438">
-          <caret line="284" column="18" selection-start-line="284" selection-start-column="18" selection-end-line="284" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/findShowDetailsByID/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="41" column="4" selection-start-line="41" selection-start-column="4" selection-end-line="41" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/findSeasonDetailsByNumber/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="445">
-          <caret line="76" column="4" selection-start-line="76" selection-start-column="4" selection-end-line="86" selection-end-column="10" />
         </state>
       </provider>
     </entry>
@@ -498,9 +451,103 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/search/main.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="129">
+          <caret line="34" column="22" selection-start-line="34" selection-start-column="22" selection-end-line="34" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/internal/services/payment/payment.go" />
+    <entry file="file://$PROJECT_DIR$/internal/services/users/accounts.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="45" column="15" selection-start-line="45" selection-start-column="15" selection-end-line="45" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/internal/services/users/profiles.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="40" selection-start-line="15" selection-start-column="40" selection-end-line="15" selection-end-column="40" />
+          <folding>
+            <element signature="e#15#99#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AddToLibrary/main.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="12">
+          <caret line="57" column="12" lean-forward="true" selection-start-line="57" selection-start-column="12" selection-end-line="57" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/internal/pkg/dynamo/users/user.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="5" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
+          <folding>
+            <element signature="e#15#168#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/findAllSuggestions/main.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="28" column="70" selection-start-line="28" selection-start-column="70" selection-end-line="28" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/findShowSuggestions/main.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="28" column="70" selection-start-line="28" selection-start-column="70" selection-end-line="28" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/internal/services/content/content.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1110">
+          <caret line="83" column="21" selection-start-line="83" selection-start-column="21" selection-end-line="83" selection-end-column="21" />
+          <folding>
+            <element signature="e#17#162#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/findEpisodeDetailsByNumber/main.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="990">
+          <caret line="80" column="33" selection-start-line="80" selection-start-column="33" selection-end-line="80" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/findMovieDetailsByID/main.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="28" column="68" selection-start-line="28" selection-start-column="62" selection-end-line="28" selection-end-column="68" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/findSeasonDetailsByNumber/main.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="28" column="70" selection-start-line="28" selection-start-column="70" selection-end-line="28" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/findShowDetailsByID/main.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="19" column="28" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/findUserProfile/main.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="735">
+        <state relative-caret-position="540">
           <caret line="49" column="89" selection-start-line="49" selection-start-column="8" selection-end-line="49" selection-end-column="89" />
           <folding>
             <element signature="e#14#355#0" expanded="true" />
@@ -510,39 +557,36 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/internal/services/content/movies.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="655">
-          <caret line="83" column="28" selection-start-line="50" selection-start-column="4" selection-end-line="83" selection-end-column="28" />
+        <state relative-caret-position="1665">
+          <caret line="120" column="4" selection-start-line="120" selection-start-column="4" selection-end-line="130" selection-end-column="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/findEpisodeDetailsByNumber/main.go">
+    <entry file="file://$PROJECT_DIR$/internal/services/content/shows.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="499">
-          <caret line="52" column="4" selection-start-line="52" selection-start-column="4" selection-end-line="59" selection-end-column="5" />
+        <state relative-caret-position="631">
+          <caret line="338" column="41" selection-start-line="338" selection-start-column="41" selection-end-line="338" selection-end-column="41" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/search/main.go">
+    <entry file="file://$PROJECT_DIR$/internal/services/guidebox/guidebox.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="129">
-          <caret line="34" column="22" selection-start-line="34" selection-start-column="22" selection-end-line="34" selection-end-column="22" />
+        <state relative-caret-position="4065">
+          <caret line="278" column="46" selection-start-line="278" selection-start-column="46" selection-end-line="278" selection-end-column="46" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/findAllSuggestions/main.go">
+    <entry file="file://$PROJECT_DIR$/findMovieSuggestions/main.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="615">
-          <caret line="55" column="5" selection-start-line="55" selection-start-column="5" selection-end-line="55" selection-end-column="5" />
+        <state relative-caret-position="1155">
+          <caret line="110" column="64" selection-start-line="110" selection-start-column="64" selection-end-line="110" selection-end-column="64" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/internal/services/content/content.go">
+    <entry file="file://$PROJECT_DIR$/signup/main.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="39" selection-start-line="17" selection-start-column="39" selection-end-line="17" selection-end-column="39" />
-          <folding>
-            <element signature="e#17#98#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="60">
+          <caret line="17" column="5" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
         </state>
       </provider>
     </entry>
